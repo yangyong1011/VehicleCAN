@@ -346,7 +346,7 @@
               <MiscControls></MiscControls>
               <Define>USE_STDPERIPH_DRIVER, STM32F10X_CL</Define>
               <Undefine></Undefine>
-              <IncludePath>..\;..\Libraries\CMSIS\CM3\CoreSupport;..\Libraries\CMSIS\CM3\DeviceSupport\ST\STM32F10x;..\Libraries\STM32F10x_StdPeriph_Driver\inc;..\source;..\source\os;..\source\app;..\source\app\led</IncludePath>
+              <IncludePath>..\;..\Libraries\CMSIS\CM3\CoreSupport;..\Libraries\CMSIS\CM3\DeviceSupport\ST\STM32F10x;..\Libraries\STM32F10x_StdPeriph_Driver\inc;..\source;..\source\os;..\source\app;..\source\app\led;..\source\lib</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
