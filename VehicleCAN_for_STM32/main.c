@@ -21,7 +21,7 @@
 
 /* Includes ------------------------------------------------------------------*/
 #include "stm32f10x.h"
-#include <stdio.h>
+#include "os.h"
 
 /** @addtogroup STM32F10x_StdPeriph_Template
   * @{
@@ -33,10 +33,6 @@
 /* Private variables ---------------------------------------------------------*/
 /* Private function prototypes -----------------------------------------------*/
 /* Private functions ---------------------------------------------------------*/
-static void InactiveLED(void);
-static void ActiveLED(void);
-static void LED_Task(void);
-static void InitLED(void);
 
 /**
   * @brief  Main program.
@@ -46,61 +42,11 @@ static void InitLED(void);
 int main(void)
 {
 	SystemInit();
-	InitLED();
+	Task_Init();
 
 	while (1)
 	{
-		LED_Task();
-	}
-}
-
-static void InitLED(void)
-{
-	GPIO_InitTypeDef GPIO_InitStructure;
-	/* GPIOA and GPIOB clock enable */
-	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOE, ENABLE);
-	/*GPIOB Configuration: TIM3 channel1, 2, 3 and 4 */
-	GPIO_InitStructure.GPIO_Pin =  GPIO_Pin_9 | GPIO_Pin_11 | GPIO_Pin_13 | GPIO_Pin_14;
-	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP;
-	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
-
-	GPIO_Init(GPIOE, &GPIO_InitStructure);
-
-	GPIO_SetBits(GPIOE , GPIO_Pin_9);
-	GPIO_SetBits(GPIOE , GPIO_Pin_11);
-	GPIO_SetBits(GPIOE , GPIO_Pin_13);
-	GPIO_SetBits(GPIOE , GPIO_Pin_14);
-}
-
-static void InactiveLED(void)
-{
-	GPIO_SetBits(GPIOE , GPIO_Pin_14);
-}
-
-static void ActiveLED(void)
-{
-	GPIO_ResetBits(GPIOE , GPIO_Pin_14);
-}
-
-static void LED_Task(void)
-{
-	static unsigned int cnt = 0;
-	static unsigned char flag = 0;
-	cnt++;
-	if (cnt > 0xfff0)
-	{
-		cnt = 0;
-		if (flag == 0)
-		{
-			ActiveLED();
-			flag = 1;
-		}
-		else
-		{
-			InactiveLED();
-			flag = 0;
-		}
-		
+		OS_Task();
 	}
 }
 
